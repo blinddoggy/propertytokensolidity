@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -40,7 +40,7 @@
 		"compilationTarget": {
 			"contracts/Property.sol": "IBEP20"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -197,11 +197,11 @@
 			]
 		},
 		"contracts/Property.sol": {
-			"keccak256": "0xae92710ebcf49c492273bb0deb3acb512423d7c82b846d13f1eaddf941086bfb",
+			"keccak256": "0xb33334ddf8128c31487ec53b5bf2c4331c6bc95cbec718bdb5254606adf3e848",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://042226bb303c1812ecf2830c0e3c375923c640312aa32b97e84c7672d5f6dc58",
-				"dweb:/ipfs/QmWyEV4n7BBePqTjWNUDNvHc7keSe47uWbRVmX5K2J4DY9"
+				"bzz-raw://c9086600d2c7bddcf72d645b6d3eddc6720ca8f95aa6a260ba6d5fb38e7e36d2",
+				"dweb:/ipfs/QmVqfspY6Us3KUa8Gfb8kUMNYLoC5xFraSYfsqHYzbXhqE"
 			]
 		}
 	},

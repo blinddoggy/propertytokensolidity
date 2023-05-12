@@ -1,12 +1,28 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "nombre",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "simbolo",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_ipfsHash",
+						"type": "string"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
@@ -226,6 +242,30 @@
 			{
 				"inputs": [
 					{
+						"internalType": "string",
+						"name": "a",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "b",
+						"type": "string"
+					}
+				],
+				"name": "concatenate",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
@@ -263,7 +303,7 @@
 						"type": "address"
 					}
 				],
-				"name": "getStruct",
+				"name": "getproject",
 				"outputs": [
 					{
 						"components": [
@@ -328,19 +368,6 @@
 			{
 				"inputs": [],
 				"name": "name",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "nombresiio",
 				"outputs": [
 					{
 						"internalType": "string",
@@ -482,19 +509,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "x",
-						"type": "string"
-					}
-				],
-				"name": "sendHash",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "address",
 						"name": "operator",
 						"type": "address"
@@ -532,19 +546,6 @@
 			{
 				"inputs": [],
 				"name": "symbol",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "symbolProject",
 				"outputs": [
 					{
 						"internalType": "string",
@@ -765,7 +766,7 @@
 		"compilationTarget": {
 			"contracts/Property.sol": "PropertyToken"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -922,11 +923,11 @@
 			]
 		},
 		"contracts/Property.sol": {
-			"keccak256": "0xae92710ebcf49c492273bb0deb3acb512423d7c82b846d13f1eaddf941086bfb",
+			"keccak256": "0x340753b11a151006e7e59f10307a8249f3fdbaae9517c77c2dbf75530065707c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://042226bb303c1812ecf2830c0e3c375923c640312aa32b97e84c7672d5f6dc58",
-				"dweb:/ipfs/QmWyEV4n7BBePqTjWNUDNvHc7keSe47uWbRVmX5K2J4DY9"
+				"bzz-raw://2ce4b7ce332d0a2304da2bf28868a30cff33de51f236fbb60a49842961f6a071",
+				"dweb:/ipfs/QmUxK1rJm69bBymwVaKonrgMn3jZHHdNc4NRvL35n1Z5hm"
 			]
 		}
 	},
