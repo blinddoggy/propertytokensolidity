@@ -25,6 +25,25 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "string",
@@ -38,19 +57,77 @@
 					},
 					{
 						"internalType": "string",
-						"name": "_ipfsHash",
+						"name": "ipfsHash",
 						"type": "string"
 					}
 				],
 				"name": "createNewProperty",
 				"outputs": [
 					{
-						"internalType": "contract Property",
+						"internalType": "contract PropertyToken",
 						"name": "",
 						"type": "address"
 					}
 				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getPropertyHash",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "mintProjectMasterOwner",
+				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "mintProjectSelfOwner",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -64,18 +141,48 @@
 				"name": "properties",
 				"outputs": [
 					{
-						"internalType": "contract Property",
+						"internalType": "contract PropertyToken",
 						"name": "",
 						"type": "address"
 					}
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -86,7 +193,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/MasterProperty.sol": "PropertyMaster"
+			"contracts/PropertyMaster.sol": "PropertyMaster"
 		},
 		"evmVersion": "shanghai",
 		"libraries": {},
@@ -114,14 +221,6 @@
 			"urls": [
 				"bzz-raw://4ddabb16009cd17eaca3143feadf450ac13e72919ebe2ca50e00f61cb78bc004",
 				"dweb:/ipfs/QmSPwPxX7d6TTWakN5jy5wsaGkS1y9TW8fuhGSraMkLk2B"
-			]
-		},
-		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-			"keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
-				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC721/ERC721.sol": {
@@ -244,20 +343,20 @@
 				"dweb:/ipfs/Qmct36zWXv3j7LZB83uwbg7TXwnZSN1fqHNDZ93GG98bGz"
 			]
 		},
-		"contracts/MasterProperty.sol": {
-			"keccak256": "0x616bcd1203c87ee683876c3b55eb44790112ea4145eedb3d2af87689664ffa0a",
+		"contracts/PropertyMaster.sol": {
+			"keccak256": "0xe72094e21afaa8b79ee1ad34eccf14356313adf4e8f702e132a56af298e72733",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://fa52efdf5671a5383ef8d8050f8c611eeba73e38791a2d3f8af2af7eb50934df",
-				"dweb:/ipfs/QmPGwd5XWxEN5E2eQicU3bBivjXUd5GNoek6U2aNAvsS99"
+				"bzz-raw://196b2941248cf8bf2d0ae170fac6db524149e71b4e4ba1f6e63c0fd43f00cb31",
+				"dweb:/ipfs/QmUyRdZoX71ihVN8o3emNp7LnFRgARVBSQiPnW3Hm3ekba"
 			]
 		},
-		"contracts/Property.sol": {
-			"keccak256": "0xb33334ddf8128c31487ec53b5bf2c4331c6bc95cbec718bdb5254606adf3e848",
+		"contracts/PropertyToken.sol": {
+			"keccak256": "0x70d03b5e3229f27566a1d53f26e6e5db8d14ede08512ac754389add8f49434e2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c9086600d2c7bddcf72d645b6d3eddc6720ca8f95aa6a260ba6d5fb38e7e36d2",
-				"dweb:/ipfs/QmVqfspY6Us3KUa8Gfb8kUMNYLoC5xFraSYfsqHYzbXhqE"
+				"bzz-raw://3b62fcbd45f1c4c089a72af1dfdcbe16cd2dbcd9a75eb7a7c4715ad85fd139e0",
+				"dweb:/ipfs/QmXbiDWZLmbfPybk8ZCL4yt9NAkJaXfWfdEYZDWZ3Q31nJ"
 			]
 		}
 	},

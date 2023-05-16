@@ -9,12 +9,12 @@
 				"inputs": [
 					{
 						"internalType": "string",
-						"name": "nombre",
+						"name": "name",
 						"type": "string"
 					},
 					{
 						"internalType": "string",
-						"name": "simbolo",
+						"name": "symbol",
 						"type": "string"
 					},
 					{
@@ -168,54 +168,11 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "ddrss",
-						"type": "address"
-					}
-				],
-				"name": "balanceNfts",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
 						"name": "owner",
 						"type": "address"
 					}
 				],
 				"name": "balanceOf",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "tknDdrss",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "ddrss",
-						"type": "address"
-					}
-				],
-				"name": "balanceToken",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -252,6 +209,30 @@
 						"type": "string"
 					}
 				],
+				"name": "compareStrings",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "a",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "b",
+						"type": "string"
+					}
+				],
 				"name": "concatenate",
 				"outputs": [
 					{
@@ -261,6 +242,19 @@
 					}
 				],
 				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -296,13 +290,7 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "contractProjectAddress",
-						"type": "address"
-					}
-				],
+				"inputs": [],
 				"name": "getproject",
 				"outputs": [
 					{
@@ -676,7 +664,6 @@
 			}
 		],
 		"devdoc": {
-			"custom:security-contact": "cucarachatraicionera@gmail.com",
 			"events": {
 				"Approval(address,address,uint256)": {
 					"details": "Emitted when `owner` enables `approved` to manage the `tokenId` token."
@@ -764,7 +751,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/Property.sol": "PropertyToken"
+			"contracts/PropertyToken.sol": "PropertyToken"
 		},
 		"evmVersion": "shanghai",
 		"libraries": {},
@@ -792,14 +779,6 @@
 			"urls": [
 				"bzz-raw://4ddabb16009cd17eaca3143feadf450ac13e72919ebe2ca50e00f61cb78bc004",
 				"dweb:/ipfs/QmSPwPxX7d6TTWakN5jy5wsaGkS1y9TW8fuhGSraMkLk2B"
-			]
-		},
-		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-			"keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
-				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC721/ERC721.sol": {
@@ -922,12 +901,12 @@
 				"dweb:/ipfs/Qmct36zWXv3j7LZB83uwbg7TXwnZSN1fqHNDZ93GG98bGz"
 			]
 		},
-		"contracts/Property.sol": {
-			"keccak256": "0x340753b11a151006e7e59f10307a8249f3fdbaae9517c77c2dbf75530065707c",
+		"contracts/PropertyToken.sol": {
+			"keccak256": "0x70d03b5e3229f27566a1d53f26e6e5db8d14ede08512ac754389add8f49434e2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2ce4b7ce332d0a2304da2bf28868a30cff33de51f236fbb60a49842961f6a071",
-				"dweb:/ipfs/QmUxK1rJm69bBymwVaKonrgMn3jZHHdNc4NRvL35n1Z5hm"
+				"bzz-raw://3b62fcbd45f1c4c089a72af1dfdcbe16cd2dbcd9a75eb7a7c4715ad85fd139e0",
+				"dweb:/ipfs/QmXbiDWZLmbfPybk8ZCL4yt9NAkJaXfWfdEYZDWZ3Q31nJ"
 			]
 		}
 	},
