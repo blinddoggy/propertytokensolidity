@@ -36,8 +36,13 @@ contract PropertyToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, 
         _;
     }
 
+
     function getHash() public view returns (string memory) {
         return ipfsHash;
+    }
+
+    function getNFTBalance(address addressNft) external view returns(uint256){
+        return balanceOf(addressNft);
     }
 
     function getProject()
@@ -59,7 +64,7 @@ contract PropertyToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, 
     function getAddress() public view returns(address){
         return address(this);
     }
-
+    
     function compareStrings(string memory a, string memory b) public pure returns (bool) {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }

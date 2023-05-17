@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.20+commit.a1b79de6"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -75,6 +75,57 @@
 			{
 				"inputs": [
 					{
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					}
+				],
+				"name": "getProject",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "symbol",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "img",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "balanceERC20",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "balanceERC721",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "nftAddress",
+								"type": "address"
+							}
+						],
+						"internalType": "struct PropertyMaster.Proyecto",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "index",
 						"type": "uint256"
@@ -83,9 +134,85 @@
 				"name": "getPropertyHash",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "string",
 						"name": "",
-						"type": "address"
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getPropertyName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getPropertySymbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getPropertyUri",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					}
+				],
+				"name": "getTokenIndex",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -195,7 +322,7 @@
 		"compilationTarget": {
 			"contracts/PropertyMaster.sol": "PropertyMaster"
 		},
-		"evmVersion": "shanghai",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -344,19 +471,19 @@
 			]
 		},
 		"contracts/PropertyMaster.sol": {
-			"keccak256": "0xe72094e21afaa8b79ee1ad34eccf14356313adf4e8f702e132a56af298e72733",
+			"keccak256": "0xfae30b34787ce1a77fe1f5cfdcc300eb7f3772dabbd099e233abab6a6633e6fc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://196b2941248cf8bf2d0ae170fac6db524149e71b4e4ba1f6e63c0fd43f00cb31",
-				"dweb:/ipfs/QmUyRdZoX71ihVN8o3emNp7LnFRgARVBSQiPnW3Hm3ekba"
+				"bzz-raw://377e2bbf62ced6668d6bd7460123bba04cfeb5394be4bc72f50fb38a0c44c586",
+				"dweb:/ipfs/QmcZBqwdf1bvMjDsLsm71CRBCktxWpASqJpFr8XfsvLYQ9"
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0x70d03b5e3229f27566a1d53f26e6e5db8d14ede08512ac754389add8f49434e2",
+			"keccak256": "0xcd5847cd09e6af691e291956c7b8b5d20d3e74a5801a25e81ef648bb937b83e8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3b62fcbd45f1c4c089a72af1dfdcbe16cd2dbcd9a75eb7a7c4715ad85fd139e0",
-				"dweb:/ipfs/QmXbiDWZLmbfPybk8ZCL4yt9NAkJaXfWfdEYZDWZ3Q31nJ"
+				"bzz-raw://09f3f31b2935e767d1a569bcaa31cddd672eec19b6353a9df39ad2c229fe77f2",
+				"dweb:/ipfs/QmV8nUReNAwR2nsw3fF5Yg3j6JbtwZNo3fqAmSamL1K3WU"
 			]
 		}
 	},

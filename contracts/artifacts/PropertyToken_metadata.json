@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.20+commit.a1b79de6"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -290,8 +290,27 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addressNft",
+						"type": "address"
+					}
+				],
+				"name": "getNFTBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "getproject",
+				"name": "getProject",
 				"outputs": [
 					{
 						"components": [
@@ -753,7 +772,7 @@
 		"compilationTarget": {
 			"contracts/PropertyToken.sol": "PropertyToken"
 		},
-		"evmVersion": "shanghai",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -902,11 +921,11 @@
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0x70d03b5e3229f27566a1d53f26e6e5db8d14ede08512ac754389add8f49434e2",
+			"keccak256": "0xcd5847cd09e6af691e291956c7b8b5d20d3e74a5801a25e81ef648bb937b83e8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3b62fcbd45f1c4c089a72af1dfdcbe16cd2dbcd9a75eb7a7c4715ad85fd139e0",
-				"dweb:/ipfs/QmXbiDWZLmbfPybk8ZCL4yt9NAkJaXfWfdEYZDWZ3Q31nJ"
+				"bzz-raw://09f3f31b2935e767d1a569bcaa31cddd672eec19b6353a9df39ad2c229fe77f2",
+				"dweb:/ipfs/QmV8nUReNAwR2nsw3fF5Yg3j6JbtwZNo3fqAmSamL1K3WU"
 			]
 		}
 	},
