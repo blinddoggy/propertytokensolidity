@@ -11,25 +11,6 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "_address",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "uint256",
-						"name": "_tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "NewPropertyToken",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
 						"name": "previousOwner",
 						"type": "address"
 					},
@@ -126,82 +107,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "getPropertyHash",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "getPropertyName",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "getPropertySymbol",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "getPropertyUri",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
@@ -227,19 +132,6 @@
 					}
 				],
 				"name": "mintProjectMasterOwner",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "mintProjectSelfOwner",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -471,11 +363,11 @@
 			]
 		},
 		"contracts/PropertyMaster.sol": {
-			"keccak256": "0xfae30b34787ce1a77fe1f5cfdcc300eb7f3772dabbd099e233abab6a6633e6fc",
-			"license": "MIT",
+			"keccak256": "0x492326f4132a97e0a1fba0f3a26a4577cf892b817a80ecee419eb21ad679847a",
+			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://377e2bbf62ced6668d6bd7460123bba04cfeb5394be4bc72f50fb38a0c44c586",
-				"dweb:/ipfs/QmcZBqwdf1bvMjDsLsm71CRBCktxWpASqJpFr8XfsvLYQ9"
+				"bzz-raw://8bf39fa71efeb30baa61b1fdeff2fd4e72df6e5cc1ba91c4a04a6eeaf2e0baa1",
+				"dweb:/ipfs/QmdFm4yFQa52B6jWTRGxvK6hJfKxttGRXXZeSN6a1Bxde8"
 			]
 		},
 		"contracts/PropertyToken.sol": {
