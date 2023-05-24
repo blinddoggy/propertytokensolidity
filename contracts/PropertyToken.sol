@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8.2 <0.9.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -9,120 +9,148 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract PropertyToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ownable, ERC721Burnable {
+contract PropertyToken is
+    ERC721,
+    ERC721Enumerable,
+    ERC721URIStorage,
+    Pausable,
+    Ownable,
+    ERC721Burnable 
+{
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
 
+    mapping(uint => address) public mintTokenIdToOwner;
+    uint256[] private mintTokenIdKeys;
+
     string ipfsHash;
 
-    struct Proyecto {
-        string name;
-        string symbol;
-        uint256 amount;
-        string img;
-        uint256 balance;
+    constructor(
+        string memory name,
+        string memory symbol,
+        string memory _ipfsHash
+    ) ERC721(name, symbol) {
+        require(!compareStrings(name, ""));
+        require(!compareStrings(symbol, ""));
+        ipfsHash = _ipfsHash;
+        //transferOwnership(_propertyMaster);
+
     }
-
-    constructor(string memory name, string memory symbol, string memory _ipfsHash ) 
-        ERC721( name , symbol) notEmptyConstuctor(name, symbol) {
-            ipfsHash = _ipfsHash;
-        }
-
-    modifier notEmptyConstuctor(string memory name, string memory symbol){
-        // for(uint i = 0; i<args.length; i++ ){
-        require( ! compareStrings(name, "") );
-        require( ! compareStrings(symbol, "") );
-        _;
-    }
-
 
     function getHash() public view returns (string memory) {
         return ipfsHash;
     }
 
-    function getNFTBalance(address addressNft) external view returns(uint256){
-        return balanceOf(addressNft);
-    }
-
-    function getProject()
-        public
-        view
-        returns (Proyecto memory)
-    {
-        address owner = owner();
-        return
-            Proyecto(
-                name(),
-                symbol(),
-                balanceOf(owner),
-                tokenURI(0),
-                address(this).balance
-            );
-    }
-
-    function getAddress() public view returns(address){
+    function getAddress() public view returns (address) {
         return address(this);
     }
-    
-    function compareStrings(string memory a, string memory b) public pure returns (bool) {
-        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
+
+    function compareStrings(
+        string memory a,
+        string memory b
+    ) internal pure returns (bool) {
+        return (keccak256(abi.encodePacked((a))) ==
+            keccak256(abi.encodePacked((b))));
     }
 
-    function concatenate(string memory a,string memory b) public pure returns (string memory){
-        return string(bytes.concat(bytes(a), bytes(b)));
+    function concatenate(
+            string memory a,
+            string memory b
+        ) public pure returns (string memory) {
+            return string(bytes.concat(bytes(a), bytes(b)));
     }
 
-    function pause() public onlyOwner {
-        _pause();
+    function getTokenIdWithoutOwner() public view returns (uint256) {
+        for (uint i = 0; i < mintTokenIdKeys.length; i++) {
+            if (mintTokenIdToOwner[i] == address(0)) {
+                return i;
+            }
+        }
+        revert("There are no NFTs without owner");
     }
 
-    function unpause() public onlyOwner {
-        _unpause();
+    function safeBatchMint(
+        address to,
+        uint256 numTokens,
+        string memory baseUri
+    ) public onlyOwner {
+        for (uint256 i = 0; i < numTokens; i++) {
+            uint256 tokenId = _tokenIdCounter.current();
+            _tokenIdCounter.increment();
+            _safeMint(to, tokenId);
+            mintTokenIdKeys.push(tokenId);
+            mintTokenIdToOwner[tokenId] = address(0);
+            _setTokenURI(
+                tokenId,
+                string(abi.encodePacked(baseUri, uint2str(tokenId)))
+            );
+        }
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function uint2str(
+        uint256 _i
+    ) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint256 j = _i;
+        uint256 len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint256 k = len;
+        while (_i != 0) {
+            k = k - 1;
+            uint8 temp = (48 + uint8(_i - (_i / 10) * 10));
+            bytes1 b1 = bytes1(temp);
+            bstr[k] = b1;
+            _i /= 10;
+        }
+        return string(bstr);
+    }
+
+    function safeMint(address to, address approved, string memory uri) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+        approve(approved, tokenId);
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
-        internal
-        whenNotPaused
-        override(ERC721, ERC721Enumerable)
-    {
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override(ERC721, ERC721Enumerable) whenNotPaused {
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
-
-    // The following functions are overrides required by Solidity.
 
     function _baseURI() internal view override returns (string memory) {
         string memory url = "https://ipfs.io/ipns/";
         string memory hash = getHash();
-        return concatenate(url,hash);
+        return concatenate(url, hash);
     }
 
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+    function _burn(
+        uint256 tokenId
+    ) internal override(ERC721, ERC721URIStorage) {
         super._burn(tokenId);
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
+    function tokenURI(
+        uint256 tokenId
+    ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
     }
 
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, ERC721Enumerable)
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override(ERC721, ERC721Enumerable) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 }

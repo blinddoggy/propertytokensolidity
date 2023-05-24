@@ -9,6 +9,50 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "succes",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "totalSupply",
+						"type": "uint256"
+					}
+				],
+				"name": "DistributeBalaceErc20",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "nftAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					}
+				],
+				"name": "NewProperty",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": true,
 						"internalType": "address",
 						"name": "previousOwner",
@@ -23,6 +67,77 @@
 				],
 				"name": "OwnershipTransferred",
 				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					}
+				],
+				"name": "TransferedErc721",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "approveErc721",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "numTokens",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "baseUri",
+						"type": "string"
+					}
+				],
+				"name": "batchMintToProject",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -40,17 +155,45 @@
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "numTokens",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "baseUri",
+						"type": "string"
 					}
 				],
 				"name": "createNewProperty",
 				"outputs": [
 					{
-						"internalType": "contract PropertyToken",
+						"internalType": "address",
 						"name": "",
 						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
 					}
 				],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "distributeBalaceErc20",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "success",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -105,38 +248,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "ipfsHash",
-						"type": "string"
-					}
-				],
-				"name": "getTokenIndex",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "mintProjectMasterOwner",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "owner",
 				"outputs": [
@@ -150,27 +261,49 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "properties",
-				"outputs": [
-					{
-						"internalType": "contract PropertyToken",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "renounceOwnership",
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "setApprovalForAllOnPropertyToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					}
+				],
+				"name": "transferErc721",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -220,7 +353,7 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -363,19 +496,19 @@
 			]
 		},
 		"contracts/PropertyMaster.sol": {
-			"keccak256": "0x492326f4132a97e0a1fba0f3a26a4577cf892b817a80ecee419eb21ad679847a",
+			"keccak256": "0xd6b18bc1e93edd4bbf1573af010ede46daa63471136f255d445be3483b444477",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://8bf39fa71efeb30baa61b1fdeff2fd4e72df6e5cc1ba91c4a04a6eeaf2e0baa1",
-				"dweb:/ipfs/QmdFm4yFQa52B6jWTRGxvK6hJfKxttGRXXZeSN6a1Bxde8"
+				"bzz-raw://3f6c8fd477f0681f39469297803b0bdf00630153c9d7ff44e5b737784202fe3e",
+				"dweb:/ipfs/QmWQSXmp4PPTQAB6ijwcdBLv2nTumCaa7FsPEmU3x3ndpK"
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0xcd5847cd09e6af691e291956c7b8b5d20d3e74a5801a25e81ef648bb937b83e8",
-			"license": "MIT",
+			"keccak256": "0xab4a1d3a0d61403f6c7abc2bccee895ff8ccfe7e2d34fad9fcaa40bcc8e0d56c",
+			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://09f3f31b2935e767d1a569bcaa31cddd672eec19b6353a9df39ad2c229fe77f2",
-				"dweb:/ipfs/QmV8nUReNAwR2nsw3fF5Yg3j6JbtwZNo3fqAmSamL1K3WU"
+				"bzz-raw://db5669d89c78416dac610a92fbd212bf9fb9d87f6ff39d187c4d55365b909c6d",
+				"dweb:/ipfs/QmR9rwW7Z3PosFNydPuT6NBYN27cRGQEKT5YR4XXwPd61t"
 			]
 		}
 	},
