@@ -496,11 +496,11 @@
 			]
 		},
 		"contracts/PropertyMaster.sol": {
-			"keccak256": "0xd6b18bc1e93edd4bbf1573af010ede46daa63471136f255d445be3483b444477",
+			"keccak256": "0x1ae93f27eb7b68f741440337b7a6f00b2a642268ba6c9a1c1d65579ffbe62634",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://3f6c8fd477f0681f39469297803b0bdf00630153c9d7ff44e5b737784202fe3e",
-				"dweb:/ipfs/QmWQSXmp4PPTQAB6ijwcdBLv2nTumCaa7FsPEmU3x3ndpK"
+				"bzz-raw://b02809ec5979f338885e300cb2ad94cae32192439a6b69640170045886266446",
+				"dweb:/ipfs/QmVZoPRqdzntJawH3gfVqjRNZnM6yHsYX8DFinC5n4S9NK"
 			]
 		},
 		"contracts/PropertyToken.sol": {

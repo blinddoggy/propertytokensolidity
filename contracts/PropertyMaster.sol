@@ -41,29 +41,31 @@ contract PropertyMaster is Ownable {
             );
     }
 
-    function createNewProperty(
-        string memory name,
-        string memory symbol,
-        string memory ipfsHash,
-        uint256 numTokens,
-        string memory baseUri
-    ) public returns (address, string memory) {
-        PropertyToken ppt = new PropertyToken(name, symbol, ipfsHash);
-        propertyMap[ipfsHash] = ppt;
-        batchMintToProject(ipfsHash, numTokens, baseUri);
-        //approveErc721(ipfsHash, 0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB, 1);//La puta q te remil  
-        emit NewProperty(address(ppt), ipfsHash);
-        return (address(ppt), ipfsHash);
-    }
+   function createNewProperty(
+    string memory name,
+    string memory symbol,
+    string memory ipfsHash,
+    uint256 numTokens,
+    string memory baseUri
+) public returns (address, string memory) {
+    PropertyToken ppt = new PropertyToken(name, symbol, ipfsHash);
+    propertyMap[ipfsHash] = ppt;
+    batchMintToProject(ipfsHash, numTokens, baseUri);
+    // No necesitamos hacer un approve en este punto porque el propietario será msg.sender
+    // approveErc721(ipfsHash, msg.sender, 1);
+    emit NewProperty(address(ppt), ipfsHash);
+    return (address(ppt), ipfsHash);
+}
 
-    function batchMintToProject(
-        string memory ipfsHash,
-        uint256 numTokens,
-        string memory baseUri
-    ) public onlyOwner {
-        PropertyToken propertyToken = getPropertyByHash(ipfsHash);
-        propertyToken.safeBatchMint(owner(), numTokens, baseUri);
-    }
+function batchMintToProject(
+    string memory ipfsHash,
+    uint256 numTokens,
+    string memory baseUri
+) public onlyOwner {
+    PropertyToken propertyToken = getPropertyByHash(ipfsHash);
+    // En lugar de enviar los tokens al owner() del contrato, los enviamos a msg.sender
+    propertyToken.safeBatchMint(msg.sender, numTokens, baseUri);
+}
 
     function transferErc721(
         string memory ipfsHash,
