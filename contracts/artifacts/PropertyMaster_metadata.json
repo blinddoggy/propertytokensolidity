@@ -294,11 +294,6 @@
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "addressOfTheERC20Token",
-						"type": "address"
 					}
 				],
 				"name": "getProject",
@@ -699,11 +694,11 @@
 			]
 		},
 		"contracts/PropertyMaster.sol": {
-			"keccak256": "0x8a4d1cfdf4f8fb6bddede82b1e3c1bc33445a1f6dd0f5573577675348dc7d339",
+			"keccak256": "0xc2f8175b67e40dd79b2952058d933ba758fb243e1687211c5ae4a13f08c1d4ff",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://ebae5b27615e6c2fe576ed7b65ec3ce2eb8b3bbc830a30e75fd86cdff96aa285",
-				"dweb:/ipfs/QmfPJ4dS9Qvn6gW9CrRZv9XVTm7cSMCUD8EfyiTGRRN59x"
+				"bzz-raw://b5d85b6f4d2db80e2c0fd630d87893c30e237ee7f3fa1316c2182fdd44371edd",
+				"dweb:/ipfs/QmVSiXsENnteU9zS4ipTuxUyLN5G7EguM7WsSkr8u9qcVv"
 			]
 		},
 		"contracts/PropertyToken.sol": {

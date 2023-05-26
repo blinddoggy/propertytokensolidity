@@ -18,7 +18,6 @@ contract PropertyMaster is Ownable {
     mapping(address => bool) public hasReceivedTransfer;
     uint256 distributeBalanceDate;
     string[] private propertyKeys;
-    ERC721[] public Properties;
 
     
 
@@ -82,8 +81,8 @@ function sendTokens(address tokenAddress, address recipient, uint256 amount) pub
 
 
     function getProject(
-    string memory ipfsHash,
-    address addressOfTheERC20Token
+    string memory ipfsHash
+    //address addressOfTheERC20Token
 
 ) public view returns (Proyecto memory) {
     PropertyToken propertyToken = getPropertyByHash(ipfsHash);

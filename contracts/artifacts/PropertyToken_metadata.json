@@ -734,6 +734,10 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -983,11 +987,11 @@
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0xcf5dc223df8309f8d9d9c5f483c7db15aacac3a0c49b67cd1ea12d28f892daaa",
+			"keccak256": "0xa25169a4a71ca0100c444609ce83c8e06d6dcda0dfc4f66d5c22f76f9e29f7aa",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://4bb1e004734a4869a669025116cc4d4d6550449d3bdc7708f94648b91beb9af1",
-				"dweb:/ipfs/QmSCwXGgWFvu5FNFUcm6tyQix3Er8JAAAaG3ECPWoFKeFg"
+				"bzz-raw://abd67389a8f21e052845010e43b26cc2dc6eff63399f176b9b831dcfc0e04274",
+				"dweb:/ipfs/QmeM8iRNjQhXS1fjnCsShG21TEvfJurKNX4qadHc3UNyPx"
 			]
 		}
 	},

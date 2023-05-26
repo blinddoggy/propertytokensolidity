@@ -19,6 +19,9 @@ contract PropertyToken is
     Ownable,
     ERC721Burnable
 {
+
+    receive() external payable {}
+
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
