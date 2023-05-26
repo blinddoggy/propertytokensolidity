@@ -8,6 +8,8 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 
 contract PropertyToken is
     ERC721,
@@ -15,7 +17,7 @@ contract PropertyToken is
     ERC721URIStorage,
     Pausable,
     Ownable,
-    ERC721Burnable 
+    ERC721Burnable
 {
     using Counters for Counters.Counter;
 
@@ -34,9 +36,36 @@ contract PropertyToken is
         require(!compareStrings(name, ""));
         require(!compareStrings(symbol, ""));
         ipfsHash = _ipfsHash;
-        //transferOwnership(_propertyMaster);
-
     }
+
+
+function approveTransfer(address tokenAddress, uint256 amount) public {
+    IERC20 token = IERC20(tokenAddress);
+    require(token.approve(address(this), amount), "Approval failed");
+}
+
+
+function transferTokensToContract(address tokenAddress, uint256 amount) public {
+    IERC20 token = IERC20(tokenAddress);
+    require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
+}
+
+
+    function receiveTokens(address tokenAddress, uint256 amount) public {
+    IERC20 token = IERC20(tokenAddress);
+    require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
+}
+
+function getERC20Balance(address tokenAddress) public view returns (uint256) {
+    IERC20 token = IERC20(tokenAddress);
+    return token.balanceOf(address(this));
+}
+
+function sendTokens(address tokenAddress, address recipient, uint256 amount) public {
+    IERC20 token = IERC20(tokenAddress);
+    require(token.transfer(recipient, amount), "Transfer failed");
+}
+
 
     function getHash() public view returns (string memory) {
         return ipfsHash;
@@ -55,14 +84,14 @@ contract PropertyToken is
     }
 
     function concatenate(
-            string memory a,
-            string memory b
-        ) public pure returns (string memory) {
-            return string(bytes.concat(bytes(a), bytes(b)));
+        string memory a,
+        string memory b
+    ) public pure returns (string memory) {
+        return string(bytes.concat(bytes(a), bytes(b)));
     }
 
     function getTokenIdWithoutOwner() public view returns (uint256) {
-        for (uint i = 0; i < mintTokenIdKeys.length; i++) {
+        for (uint i = 1; i < mintTokenIdKeys.length; i++) {
             if (mintTokenIdToOwner[i] == address(0)) {
                 return i;
             }
@@ -112,14 +141,12 @@ contract PropertyToken is
         return string(bstr);
     }
 
-    function safeMint(address to, address approved, string memory uri) public onlyOwner {
+    function safeMint(address to, string memory uri) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
-        approve(approved, tokenId);
     }
-
 
     function _beforeTokenTransfer(
         address from,

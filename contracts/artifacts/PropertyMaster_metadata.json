@@ -16,6 +16,12 @@
 					},
 					{
 						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"indexed": false,
 						"internalType": "uint256",
 						"name": "balance",
 						"type": "uint256"
@@ -25,9 +31,15 @@
 						"internalType": "uint256",
 						"name": "totalSupply",
 						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
 					}
 				],
-				"name": "DistributeBalaceErc20",
+				"name": "DistributedBalanceErc20",
 				"type": "event"
 			},
 			{
@@ -40,13 +52,25 @@
 						"type": "address"
 					},
 					{
-						"indexed": false,
+						"indexed": true,
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
 					}
 				],
-				"name": "NewProperty",
+				"name": "NewPropertyCreated",
 				"type": "event"
 			},
 			{
@@ -73,6 +97,12 @@
 				"inputs": [
 					{
 						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"indexed": false,
 						"internalType": "address",
 						"name": "from",
 						"type": "address"
@@ -84,14 +114,33 @@
 						"type": "address"
 					},
 					{
-						"indexed": false,
+						"indexed": true,
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
 					}
 				],
-				"name": "TransferedErc721",
+				"name": "TransferredErc721",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "Properties",
+				"outputs": [
+					{
+						"internalType": "contract ERC721",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -112,6 +161,24 @@
 					}
 				],
 				"name": "approveErc721",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "approveTransfer",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -184,8 +251,14 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "distributeBalaceErc20",
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					}
+				],
+				"name": "distributeBalanceErc20",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -199,9 +272,33 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "getERC20Balance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "addressOfTheERC20Token",
+						"type": "address"
 					}
 				],
 				"name": "getProject",
@@ -248,6 +345,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "hasReceivedTransfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "owner",
 				"outputs": [
@@ -261,8 +377,49 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "receiveTokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "sendTokens",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -320,6 +477,28 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferTokensToContract",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -373,6 +552,30 @@
 			"urls": [
 				"bzz-raw://4ddabb16009cd17eaca3143feadf450ac13e72919ebe2ca50e00f61cb78bc004",
 				"dweb:/ipfs/QmSPwPxX7d6TTWakN5jy5wsaGkS1y9TW8fuhGSraMkLk2B"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0xa56ca923f70c1748830700250b19c61b70db9a683516dc5e216694a50445d99c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cac938788bc4be12101e59d45588b4e059579f4e61062e1cda8d6b06c0191b15",
+				"dweb:/ipfs/QmV2JKCyjTVH3rkWNrfdJRhAT7tZ3usAN2XcnD4h53Mvih"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
+				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+			"keccak256": "0x8de418a5503946cabe331f35fe242d3201a73f67f77aaeb7110acb1f30423aca",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5a376d3dda2cb70536c0a45c208b29b34ac560c4cb4f513a42079f96ba47d2dd",
+				"dweb:/ipfs/QmZQg6gn1sUpM8wHzwNvSnihumUCAhxD119MpXeKp8B9s8"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC721/ERC721.sol": {
@@ -496,19 +699,19 @@
 			]
 		},
 		"contracts/PropertyMaster.sol": {
-			"keccak256": "0x1ae93f27eb7b68f741440337b7a6f00b2a642268ba6c9a1c1d65579ffbe62634",
+			"keccak256": "0x8a4d1cfdf4f8fb6bddede82b1e3c1bc33445a1f6dd0f5573577675348dc7d339",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://b02809ec5979f338885e300cb2ad94cae32192439a6b69640170045886266446",
-				"dweb:/ipfs/QmVZoPRqdzntJawH3gfVqjRNZnM6yHsYX8DFinC5n4S9NK"
+				"bzz-raw://ebae5b27615e6c2fe576ed7b65ec3ce2eb8b3bbc830a30e75fd86cdff96aa285",
+				"dweb:/ipfs/QmfPJ4dS9Qvn6gW9CrRZv9XVTm7cSMCUD8EfyiTGRRN59x"
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0xab4a1d3a0d61403f6c7abc2bccee895ff8ccfe7e2d34fad9fcaa40bcc8e0d56c",
+			"keccak256": "0xcf5dc223df8309f8d9d9c5f483c7db15aacac3a0c49b67cd1ea12d28f892daaa",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://db5669d89c78416dac610a92fbd212bf9fb9d87f6ff39d187c4d55365b909c6d",
-				"dweb:/ipfs/QmR9rwW7Z3PosFNydPuT6NBYN27cRGQEKT5YR4XXwPd61t"
+				"bzz-raw://4bb1e004734a4869a669025116cc4d4d6550449d3bdc7708f94648b91beb9af1",
+				"dweb:/ipfs/QmSCwXGgWFvu5FNFUcm6tyQix3Er8JAAAaG3ECPWoFKeFg"
 			]
 		}
 	},
