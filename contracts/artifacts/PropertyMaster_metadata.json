@@ -126,25 +126,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "Properties",
-				"outputs": [
-					{
-						"internalType": "contract ERC721",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
@@ -258,14 +239,8 @@
 						"type": "string"
 					}
 				],
-				"name": "distributeBalanceErc20",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "success",
-						"type": "bool"
-					}
-				],
+				"name": "distributeBalance",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -694,19 +669,19 @@
 			]
 		},
 		"contracts/PropertyMaster.sol": {
-			"keccak256": "0xc2f8175b67e40dd79b2952058d933ba758fb243e1687211c5ae4a13f08c1d4ff",
+			"keccak256": "0xd787f9dfbc2619ca3e13dde769d4e12ec0486ddcca1f4b22529438dd1809419a",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://b5d85b6f4d2db80e2c0fd630d87893c30e237ee7f3fa1316c2182fdd44371edd",
-				"dweb:/ipfs/QmVSiXsENnteU9zS4ipTuxUyLN5G7EguM7WsSkr8u9qcVv"
+				"bzz-raw://d975d1b1db4e5ff1a35cde8a85a038af71e243c1506dd8d1f69a8b7d72248060",
+				"dweb:/ipfs/QmZ4SNv2gne9CpM8Q7BQyEEXGTfiGkVT5PxzKyNogezGbS"
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0xcf5dc223df8309f8d9d9c5f483c7db15aacac3a0c49b67cd1ea12d28f892daaa",
+			"keccak256": "0x9f214fb1fdbafbc28a780eb341cb6a2e5142696daa41d8882bd22b5e6db70ada",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://4bb1e004734a4869a669025116cc4d4d6550449d3bdc7708f94648b91beb9af1",
-				"dweb:/ipfs/QmSCwXGgWFvu5FNFUcm6tyQix3Er8JAAAaG3ECPWoFKeFg"
+				"bzz-raw://641ad008a96daa3eb2539373b89f3e4a6f924242402d3c3da5deab6c56a0f7ef",
+				"dweb:/ipfs/Qmao11KNVVsY4bqYETdSVTmJEmRy5KGr49RCWJ9Nt8cxov"
 			]
 		}
 	},

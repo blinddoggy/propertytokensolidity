@@ -987,11 +987,11 @@
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0xa25169a4a71ca0100c444609ce83c8e06d6dcda0dfc4f66d5c22f76f9e29f7aa",
+			"keccak256": "0x9f214fb1fdbafbc28a780eb341cb6a2e5142696daa41d8882bd22b5e6db70ada",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://abd67389a8f21e052845010e43b26cc2dc6eff63399f176b9b831dcfc0e04274",
-				"dweb:/ipfs/QmeM8iRNjQhXS1fjnCsShG21TEvfJurKNX4qadHc3UNyPx"
+				"bzz-raw://641ad008a96daa3eb2539373b89f3e4a6f924242402d3c3da5deab6c56a0f7ef",
+				"dweb:/ipfs/Qmao11KNVVsY4bqYETdSVTmJEmRy5KGr49RCWJ9Nt8cxov"
 			]
 		}
 	},

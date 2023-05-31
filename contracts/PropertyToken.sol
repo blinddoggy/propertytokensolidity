@@ -20,6 +20,7 @@ contract PropertyToken is
     ERC721Burnable
 {
 
+
     receive() external payable {}
 
     using Counters for Counters.Counter;

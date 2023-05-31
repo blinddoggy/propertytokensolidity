@@ -12,6 +12,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract PropertyMaster is Ownable {
 
+
     receive() external payable {}
 
     mapping(string => PropertyToken) private propertyMap;
@@ -160,7 +161,7 @@ function sendTokens(address tokenAddress, address recipient, uint256 amount) pub
         propertyToken.approve(to, tokenId);
     }
 
-    function distributeBalanceErc20(
+    /*function distributeBalance(
         string memory ipfsHash
     ) public returns (bool success) {
         PropertyToken propertyToken = getPropertyByHash(ipfsHash);
@@ -168,32 +169,21 @@ function sendTokens(address tokenAddress, address recipient, uint256 amount) pub
         uint256 contractBalance = address(propertyToken).balance;
 
         if (totalSupply == 0 || contractBalance == 0) {
-            emit DistributedBalanceErc20(
-                false,
-                propertyToken.name(),
-                contractBalance,
-                totalSupply,
-                ipfsHash
-            );
-            return false;
+            revert("Cannot distribute: totalSupply or contract balance is zero");
+        }
+
+        uint256 amountPerOwner = contractBalance / totalSupply;
+        if (amountPerOwner == 0) {
+            revert("Cannot distribute: contract balance is less than totalSupply, each owner must receive at least 1 wei");
         }
 
         for (uint256 i = 0; i < totalSupply; i++) {
             address owner = propertyToken.ownerOf(i);
-            hasReceivedTransfer[owner] = false;
-        }
-
-        for (uint256 i = 0; i < totalSupply; i++) {
-            address owner = propertyToken.ownerOf(i);
-
-            if (hasReceivedTransfer[owner]) continue;
-
-            uint256 ownerTokenCount = propertyToken.balanceOf(owner);
-            uint256 amountPerOwner = (contractBalance / totalSupply) *
-                ownerTokenCount;
-
-            payable(owner).transfer(amountPerOwner);
-            hasReceivedTransfer[owner] = true;
+            if (!hasReceivedTransfer[owner]) {
+                (bool sent, ) = payable(owner).call{value: amountPerOwner}("");
+                require(sent, "Failed to send Ether");
+                hasReceivedTransfer[owner] = true;
+            }
         }
 
         distributeBalanceDate = block.timestamp;
@@ -206,8 +196,35 @@ function sendTokens(address tokenAddress, address recipient, uint256 amount) pub
             ipfsHash
         );
 
-        return true;
+    return true;
+}
+*/
+
+
+    function distributeBalance(string memory ipfsHash) public onlyOwner {
+        PropertyToken propertyToken = getPropertyByHash(ipfsHash);
+        uint256 totalSupply = propertyToken.totalSupply();
+        require(totalSupply > 0, "No tokens to distribute");
+
+        uint256 contractBalance = address(this).balance;
+        require(contractBalance > 0, "No balance to distribute");
+
+        uint256 amountPerOwner = contractBalance / totalSupply;
+        require(amountPerOwner > 0, "Not enough balance to distribute");
+
+        // Iterate through all tokenIds owned by the contract
+        for (uint256 i = 1; i <= totalSupply; i++) {
+            address owner = propertyToken.ownerOf(i);
+            if (!hasReceivedTransfer[owner]) {
+                // transfer the fund to the owner
+                (bool success, ) = payable(owner).call{value: amountPerOwner}("");
+                if (success) {
+                    hasReceivedTransfer[owner] = true;
+                }
+            }
+        }
     }
+   
 
     function getPropertyByHash(
         string memory ipfsHash
