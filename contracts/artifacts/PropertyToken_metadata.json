@@ -112,6 +112,25 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "Received",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": true,
 						"internalType": "address",
 						"name": "from",
@@ -131,6 +150,25 @@
 					}
 				],
 				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Transferred",
 				"type": "event"
 			},
 			{
@@ -684,6 +722,24 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address payable",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferETH",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "from",
 						"type": "address"
@@ -987,11 +1043,11 @@
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0x9f214fb1fdbafbc28a780eb341cb6a2e5142696daa41d8882bd22b5e6db70ada",
+			"keccak256": "0x779a39fcc1cc6c64333b74246c6eff9f05809cdfc6d6da39a1b4b7a171e51eb1",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://641ad008a96daa3eb2539373b89f3e4a6f924242402d3c3da5deab6c56a0f7ef",
-				"dweb:/ipfs/Qmao11KNVVsY4bqYETdSVTmJEmRy5KGr49RCWJ9Nt8cxov"
+				"bzz-raw://7739b29f36b4a00bbcb2a60126a2cac9f1aa32a52ed1b2bcc856ee455922d3f9",
+				"dweb:/ipfs/QmRLFKemLxPJPUDzbpBsYGApz4w9q4HrKHNyYiHob6rRgU"
 			]
 		}
 	},

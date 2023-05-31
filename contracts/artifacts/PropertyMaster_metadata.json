@@ -11,7 +11,7 @@
 					{
 						"indexed": false,
 						"internalType": "bool",
-						"name": "succes",
+						"name": "success",
 						"type": "bool"
 					},
 					{
@@ -37,9 +37,15 @@
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "srcImage",
+						"type": "string"
 					}
 				],
-				"name": "DistributedBalanceErc20",
+				"name": "DistributedBalance",
 				"type": "event"
 			},
 			{
@@ -68,6 +74,12 @@
 						"internalType": "uint256",
 						"name": "timestamp",
 						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "srcImage",
+						"type": "string"
 					}
 				],
 				"name": "NewPropertyCreated",
@@ -90,6 +102,44 @@
 					}
 				],
 				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "Received",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Transferred",
 				"type": "event"
 			},
 			{
@@ -142,24 +192,6 @@
 					}
 				],
 				"name": "approveErc721",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "tokenAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "approveTransfer",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -247,25 +279,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "tokenAddress",
-						"type": "address"
-					}
-				],
-				"name": "getERC20Balance",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "string",
 						"name": "ipfsHash",
 						"type": "string"
@@ -347,49 +360,8 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "tokenAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "receiveTokens",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "renounceOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "tokenAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "recipient",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "sendTokens",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -408,6 +380,47 @@
 					}
 				],
 				"name": "setApprovalForAllOnPropertyToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferETH",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "ipfsHash",
+						"type": "string"
+					},
+					{
+						"internalType": "address payable",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferETHByHash",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -444,24 +457,6 @@
 					}
 				],
 				"name": "transferOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "tokenAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "transferTokensToContract",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -669,19 +664,19 @@
 			]
 		},
 		"contracts/PropertyMaster.sol": {
-			"keccak256": "0xd787f9dfbc2619ca3e13dde769d4e12ec0486ddcca1f4b22529438dd1809419a",
+			"keccak256": "0xb10888dc5abed49337559674ce236d4d1078a4433df7343c7cfc9a0a1c11460d",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://d975d1b1db4e5ff1a35cde8a85a038af71e243c1506dd8d1f69a8b7d72248060",
-				"dweb:/ipfs/QmZ4SNv2gne9CpM8Q7BQyEEXGTfiGkVT5PxzKyNogezGbS"
+				"bzz-raw://b8fafa40e0aadd4c9b69377e7748e5a2c989c21e1cb2897f186df5f25ad433fd",
+				"dweb:/ipfs/QmcJwspW4hcsHQiUzbLM1yLF9ZLQxNmaDFXWM5ywcQRKZ3"
 			]
 		},
 		"contracts/PropertyToken.sol": {
-			"keccak256": "0x9f214fb1fdbafbc28a780eb341cb6a2e5142696daa41d8882bd22b5e6db70ada",
+			"keccak256": "0x41fb91aa5490e434d7e494f3ae4ff8daf8fb73c353dd8b4035d7f6240e89288b",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://641ad008a96daa3eb2539373b89f3e4a6f924242402d3c3da5deab6c56a0f7ef",
-				"dweb:/ipfs/Qmao11KNVVsY4bqYETdSVTmJEmRy5KGr49RCWJ9Nt8cxov"
+				"bzz-raw://e878eaba1ed0cb2d416922d5d66023f4d263a8628c736dabf2c325bd91a8ac08",
+				"dweb:/ipfs/QmY1auoR4FLcfQVCi4k9x7UH6vzDLdvyuTRw2CKNbPVtwB"
 			]
 		}
 	},

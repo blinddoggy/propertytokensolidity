@@ -11,9 +11,13 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 
 contract PropertyMaster is Ownable {
+    //Native Token implementation
+    event Received(address, uint);
+    event Transferred(address to, uint amount);
 
-
-    receive() external payable {}
+    receive() external payable {
+        emit Received(msg.sender, msg.value);
+    }   
 
     mapping(string => PropertyToken) private propertyMap;
     mapping(address => bool) public hasReceivedTransfer;
@@ -35,7 +39,8 @@ contract PropertyMaster is Ownable {
         address nftAddress,
         string indexed ipfsHash,
         string name,
-        uint256 timestamp
+        uint256 timestamp,
+        string srcImage
     );
     event TransferredErc721(
         string name,
@@ -44,41 +49,14 @@ contract PropertyMaster is Ownable {
         string indexed ipfsHash
     );
 
-    event DistributedBalanceErc20(
-        bool succes,
+    event DistributedBalance(
+        bool success,
         string name,
         uint256 balance,
         uint256 totalSupply,
-        string indexed ipfsHash
+        string indexed ipfsHash,
+        string srcImage
     );
-
-
-function approveTransfer(address tokenAddress, uint256 amount) public {
-    IERC20 token = IERC20(tokenAddress);
-    require(token.approve(address(this), amount), "Approval failed");
-}
-
-
-function transferTokensToContract(address tokenAddress, uint256 amount) public {
-    IERC20 token = IERC20(tokenAddress);
-    require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
-}
-
-
-    function receiveTokens(address tokenAddress, uint256 amount) public {
-    IERC20 token = IERC20(tokenAddress);
-    require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
-}
-
-function getERC20Balance(address tokenAddress) public view returns (uint256) {
-    IERC20 token = IERC20(tokenAddress);
-    return token.balanceOf(address(this));
-}
-
-function sendTokens(address tokenAddress, address recipient, uint256 amount) public {
-    IERC20 token = IERC20(tokenAddress);
-    require(token.transfer(recipient, amount), "Transfer failed");
-}
 
 
     function getProject(
@@ -114,7 +92,8 @@ function sendTokens(address tokenAddress, address recipient, uint256 amount) pub
             address(ppt),
             ipfsHash,
             ppt.name(),
-            block.timestamp
+            block.timestamp,
+            baseUri
         );
         return (address(ppt), ipfsHash);
     }
@@ -161,68 +140,52 @@ function sendTokens(address tokenAddress, address recipient, uint256 amount) pub
         propertyToken.approve(to, tokenId);
     }
 
-    /*function distributeBalance(
-        string memory ipfsHash
-    ) public returns (bool success) {
+  
+
+    // This function sends ETH from the PropertyToken's balance
+    function transferETHByHash(string memory ipfsHash, address payable _to, uint _amount) public onlyOwner {
         PropertyToken propertyToken = getPropertyByHash(ipfsHash);
-        uint256 totalSupply = propertyToken.totalSupply();
-        uint256 contractBalance = address(propertyToken).balance;
-
-        if (totalSupply == 0 || contractBalance == 0) {
-            revert("Cannot distribute: totalSupply or contract balance is zero");
-        }
-
-        uint256 amountPerOwner = contractBalance / totalSupply;
-        if (amountPerOwner == 0) {
-            revert("Cannot distribute: contract balance is less than totalSupply, each owner must receive at least 1 wei");
-        }
-
-        for (uint256 i = 0; i < totalSupply; i++) {
-            address owner = propertyToken.ownerOf(i);
-            if (!hasReceivedTransfer[owner]) {
-                (bool sent, ) = payable(owner).call{value: amountPerOwner}("");
-                require(sent, "Failed to send Ether");
-                hasReceivedTransfer[owner] = true;
-            }
-        }
-
-        distributeBalanceDate = block.timestamp;
-
-        emit DistributedBalanceErc20(
-            true,
-            propertyToken.name(),
-            contractBalance,
-            totalSupply,
-            ipfsHash
-        );
-
-    return true;
-}
-*/
+         propertyToken.transferETH(_to, _amount);
+    }
 
 
-    function distributeBalance(string memory ipfsHash) public onlyOwner {
+    //Transfer Native Token
+    function transferETH(address payable _to, uint _amount) public {
+        require(address(this).balance >= _amount, "Insufficient balance in contract");
+        _to.transfer(_amount);
+        emit Transferred(_to, _amount);
+    }
+
+    //function distribute balance
+    function distributeBalance( string memory ipfsHash) public  onlyOwner{
+
         PropertyToken propertyToken = getPropertyByHash(ipfsHash);
+
         uint256 totalSupply = propertyToken.totalSupply();
         require(totalSupply > 0, "No tokens to distribute");
 
-        uint256 contractBalance = address(this).balance;
+        uint256 contractBalance = address(propertyToken).balance;
         require(contractBalance > 0, "No balance to distribute");
 
         uint256 amountPerOwner = contractBalance / totalSupply;
         require(amountPerOwner > 0, "Not enough balance to distribute");
 
         // Iterate through all tokenIds owned by the contract
-        for (uint256 i = 1; i <= totalSupply; i++) {
-            address owner = propertyToken.ownerOf(i);
-            if (!hasReceivedTransfer[owner]) {
-                // transfer the fund to the owner
-                (bool success, ) = payable(owner).call{value: amountPerOwner}("");
-                if (success) {
-                    hasReceivedTransfer[owner] = true;
-                }
-            }
+        for (uint256 i = 0; i < totalSupply; i++) {
+            address payable owner = payable(propertyToken.ownerOf(i));
+            // transfer the fund to the owner
+            propertyToken.transferETH(owner, amountPerOwner);
+            
         }
+
+        emit DistributedBalance(
+            true,
+            propertyToken.name(),
+            contractBalance,
+            totalSupply,
+            ipfsHash,
+            propertyToken.tokenURI(0)
+        );
     }
    
 

@@ -21,8 +21,13 @@ contract PropertyToken is
 {
 
 
-    receive() external payable {}
+    event Received(address, uint);
+    event Transferred(address to, uint amount);
 
+    receive() external payable {
+        emit Received(msg.sender, msg.value);
+    }   
+    
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -43,10 +48,18 @@ contract PropertyToken is
     }
 
 
-function approveTransfer(address tokenAddress, uint256 amount) public {
-    IERC20 token = IERC20(tokenAddress);
-    require(token.approve(address(this), amount), "Approval failed");
-}
+    //Transfer Native Token
+    function transferETH(address payable _to, uint _amount) public {
+        require(address(this).balance >= _amount, "Insufficient balance in contract");
+        _to.transfer(_amount);
+        emit Transferred(_to, _amount);
+    }
+
+
+    function approveTransfer(address tokenAddress, uint256 amount) public {
+        IERC20 token = IERC20(tokenAddress);
+        require(token.approve(address(this), amount), "Approval failed");
+    }
 
 
 function transferTokensToContract(address tokenAddress, uint256 amount) public {
