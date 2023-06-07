@@ -10,7 +10,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-
 contract PropertyToken is
     ERC721,
     ERC721Enumerable,
@@ -19,15 +18,13 @@ contract PropertyToken is
     Ownable,
     ERC721Burnable
 {
-
-
     event Received(address, uint);
     event Transferred(address to, uint amount);
 
     receive() external payable {
         emit Received(msg.sender, msg.value);
-    }   
-    
+    }
+
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -47,42 +44,54 @@ contract PropertyToken is
         ipfsHash = _ipfsHash;
     }
 
-
-    //Transfer Native Token
     function transferETH(address payable _to, uint _amount) public {
-        require(address(this).balance >= _amount, "Insufficient balance in contract");
+        require(
+            address(this).balance >= _amount,
+            "Insufficient balance in contract"
+        );
         _to.transfer(_amount);
         emit Transferred(_to, _amount);
     }
-
 
     function approveTransfer(address tokenAddress, uint256 amount) public {
         IERC20 token = IERC20(tokenAddress);
         require(token.approve(address(this), amount), "Approval failed");
     }
 
-
-function transferTokensToContract(address tokenAddress, uint256 amount) public {
-    IERC20 token = IERC20(tokenAddress);
-    require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
-}
-
+    function transferTokensToContract(
+        address tokenAddress,
+        uint256 amount
+    ) public {
+        IERC20 token = IERC20(tokenAddress);
+        require(
+            token.transferFrom(msg.sender, address(this), amount),
+            "Transfer failed"
+        );
+    }
 
     function receiveTokens(address tokenAddress, uint256 amount) public {
-    IERC20 token = IERC20(tokenAddress);
-    require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
-}
+        IERC20 token = IERC20(tokenAddress);
+        require(
+            token.transferFrom(msg.sender, address(this), amount),
+            "Transfer failed"
+        );
+    }
 
-function getERC20Balance(address tokenAddress) public view returns (uint256) {
-    IERC20 token = IERC20(tokenAddress);
-    return token.balanceOf(address(this));
-}
+    function getERC20Balance(
+        address tokenAddress
+    ) public view returns (uint256) {
+        IERC20 token = IERC20(tokenAddress);
+        return token.balanceOf(address(this));
+    }
 
-function sendTokens(address tokenAddress, address recipient, uint256 amount) public {
-    IERC20 token = IERC20(tokenAddress);
-    require(token.transfer(recipient, amount), "Transfer failed");
-}
-
+    function sendTokens(
+        address tokenAddress,
+        address recipient,
+        uint256 amount
+    ) public {
+        IERC20 token = IERC20(tokenAddress);
+        require(token.transfer(recipient, amount), "Transfer failed");
+    }
 
     function getHash() public view returns (string memory) {
         return ipfsHash;
@@ -129,7 +138,7 @@ function sendTokens(address tokenAddress, address recipient, uint256 amount) pub
             mintTokenIdToOwner[tokenId] = address(0);
             _setTokenURI(
                 tokenId,
-                string(abi.encodePacked(baseUri, uint2str(tokenId)))
+                string(baseUri)
             );
         }
     }
@@ -174,11 +183,13 @@ function sendTokens(address tokenAddress, address recipient, uint256 amount) pub
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    function _baseURI() internal view override returns (string memory) {
-        string memory url = "https://ipfs.io/ipns/";
+    /*function _baseURI() internal view override returns (string memory) {
+        string memory url = "https://ipfs.io/ipfs/";
         string memory hash = getHash();
         return concatenate(url, hash);
-    }
+    }*/
+
+
 
     function _burn(
         uint256 tokenId

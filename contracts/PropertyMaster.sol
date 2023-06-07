@@ -8,23 +8,18 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-
-
 contract PropertyMaster is Ownable {
-    //Native Token implementation
     event Received(address, uint);
     event Transferred(address to, uint amount);
 
     receive() external payable {
         emit Received(msg.sender, msg.value);
-    }   
+    }
 
     mapping(string => PropertyToken) private propertyMap;
     mapping(address => bool) public hasReceivedTransfer;
-    uint256 distributeBalanceDate;
+    uint256 lastDistributedBalanceDate;
     string[] private propertyKeys;
-
-    
 
     struct Proyecto {
         string name;
@@ -36,48 +31,43 @@ contract PropertyMaster is Ownable {
     }
 
     event NewPropertyCreated(
-        address nftAddress,
         string indexed ipfsHash,
+        address nftAddress,
         string name,
         uint256 timestamp,
         string srcImage
     );
     event TransferredErc721(
+        string indexed ipfsHash,
         string name,
         address from,
-        address to,
-        string indexed ipfsHash
+        address to
     );
 
     event DistributedBalance(
+        string indexed ipfsHash,
         bool success,
         string name,
         uint256 balance,
         uint256 totalSupply,
-        string indexed ipfsHash,
         string srcImage
     );
 
-
     function getProject(
-    string memory ipfsHash
-    //address addressOfTheERC20Token
+        string memory ipfsHash
+    ) public view returns (Proyecto memory) {
+        PropertyToken propertyToken = getPropertyByHash(ipfsHash);
+        return
+            Proyecto(
+                propertyToken.name(),
+                propertyToken.symbol(),
+                propertyToken.tokenURI(0),
+                address(propertyToken).balance,
+                propertyToken.balanceOf(owner()),
+                address(propertyToken)
+            );
+    }
 
-) public view returns (Proyecto memory) {
-    PropertyToken propertyToken = getPropertyByHash(ipfsHash);
-    //ERC20 erc20Token = ERC20(addressOfTheERC20Token);
-    //uint256 balanceERC20 = erc20Token.balanceOf(address(propertyToken));
-    
-    return
-        Proyecto(
-            propertyToken.name(),
-            propertyToken.symbol(),
-            propertyToken.tokenURI(0),
-            address(propertyToken).balance,
-            propertyToken.balanceOf(owner()),
-            address(propertyToken)
-        );
-}
     function createNewProperty(
         string memory name,
         string memory symbol,
@@ -85,17 +75,17 @@ contract PropertyMaster is Ownable {
         uint256 numTokens,
         string memory baseUri
     ) public returns (address, string memory) {
-        PropertyToken ppt = new PropertyToken(name, symbol, ipfsHash);
-        propertyMap[ipfsHash] = ppt;
+        PropertyToken propertyToken = new PropertyToken(name, symbol, ipfsHash);
+        propertyMap[ipfsHash] = propertyToken;
         batchMintToProject(ipfsHash, numTokens, baseUri);
         emit NewPropertyCreated(
-            address(ppt),
             ipfsHash,
-            ppt.name(),
+            address(propertyToken),
+            propertyToken.name(),
             block.timestamp,
-            baseUri
+            propertyToken.tokenURI(0)
         );
-        return (address(ppt), ipfsHash);
+        return (address(propertyToken), ipfsHash);
     }
 
     function batchMintToProject(
@@ -120,7 +110,7 @@ contract PropertyMaster is Ownable {
         uint256 tokenId = propertyToken.getTokenIdWithoutOwner();
         propertyToken.approve(to, tokenId);
         propertyToken.safeTransferFrom(from, to, tokenId);
-        emit TransferredErc721(propertyToken.name(), from, to, ipfsHash);
+        emit TransferredErc721(ipfsHash, propertyToken.name(), from, to);
     }
 
     function setApprovalForAllOnPropertyToken(
@@ -140,25 +130,25 @@ contract PropertyMaster is Ownable {
         propertyToken.approve(to, tokenId);
     }
 
-  
-
-    // This function sends ETH from the PropertyToken's balance
-    function transferETHByHash(string memory ipfsHash, address payable _to, uint _amount) public onlyOwner {
+    function transferETHByHash(
+        string memory ipfsHash,
+        address payable _to,
+        uint _amount
+    ) public onlyOwner {
         PropertyToken propertyToken = getPropertyByHash(ipfsHash);
-         propertyToken.transferETH(_to, _amount);
+        propertyToken.transferETH(_to, _amount);
     }
 
-
-    //Transfer Native Token
     function transferETH(address payable _to, uint _amount) public {
-        require(address(this).balance >= _amount, "Insufficient balance in contract");
+        require(
+            address(this).balance >= _amount,
+            "Insufficient balance in contract"
+        );
         _to.transfer(_amount);
         emit Transferred(_to, _amount);
     }
 
-    //function distribute balance
-    function distributeBalance( string memory ipfsHash) public  onlyOwner{
-
+    function distributeBalance(string memory ipfsHash) public onlyOwner {
         PropertyToken propertyToken = getPropertyByHash(ipfsHash);
 
         uint256 totalSupply = propertyToken.totalSupply();
@@ -170,24 +160,20 @@ contract PropertyMaster is Ownable {
         uint256 amountPerOwner = contractBalance / totalSupply;
         require(amountPerOwner > 0, "Not enough balance to distribute");
 
-        // Iterate through all tokenIds owned by the contract
         for (uint256 i = 0; i < totalSupply; i++) {
             address payable owner = payable(propertyToken.ownerOf(i));
-            // transfer the fund to the owner
             propertyToken.transferETH(owner, amountPerOwner);
-            
         }
 
         emit DistributedBalance(
+            ipfsHash,
             true,
             propertyToken.name(),
             contractBalance,
             totalSupply,
-            ipfsHash,
             propertyToken.tokenURI(0)
         );
     }
-   
 
     function getPropertyByHash(
         string memory ipfsHash
